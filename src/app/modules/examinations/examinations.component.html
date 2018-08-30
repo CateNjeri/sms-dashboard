@@ -1,0 +1,15 @@
+<mat-card>
+  <mat-card-header fxLayoutAlign="space-between">
+      <mat-card-title>
+          <h2>Examinations</h2>
+      </mat-card-title>
+        <div fxLayout="row" fxLayoutAlign="end center">
+            <button (click)="addExamination()" mat-button mat-raised-button color="accent">
+                <mat-icon>add</mat-icon>
+            </button>
+        </div>
+  </mat-card-header>
+  <mat-card-content>
+    <stbui-table (onActionClick)="actionClick($event)" [query]="examinationsTable.query" (onSelectChange)="onSelectChange($event)" (onSelectAll)="onSelectChange($event)" [columns]="examinationsTable.columns" [data]="examinationsTable.data"></stbui-table>
+  </mat-card-content>
+</mat-card>

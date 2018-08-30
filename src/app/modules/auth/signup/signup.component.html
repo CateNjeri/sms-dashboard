@@ -1,0 +1,167 @@
+<div fxLayout="row" fxLayoutAlign="center center" style="height: 100%;">
+    <div class="register mat-elevation-z12">
+            <mat-progress-bar *ngIf="isProcessing" style="position: relative;" mode="indeterminate"></mat-progress-bar>  
+        <div class="register-header" fxLayout="column" fxLayoutAlign="center center">
+            Schools' Registration
+        </div>
+        <mat-horizontal-stepper>
+            <mat-step label="School Details">
+                <form>
+
+                </form>
+            </mat-step>
+            <mat-step label="Login Details">
+                <form>
+
+                </form>
+            </mat-step>
+        </mat-horizontal-stepper>
+        <mat-accordion>
+            <mat-expansion-panel [expanded]="signupStep === 0" [disabled]="signupStep === 1">
+                <mat-expansion-panel-header>
+                    <mat-panel-title>
+                        School Details:
+                    </mat-panel-title>
+                    <mat-panel-description>
+                        {{ school.name === ''? 'Register school': school.name }}
+                    </mat-panel-description>
+                </mat-expansion-panel-header>
+                <form #form="ngForm" (ngSubmit)="register()">
+                    <div class="register-content" fxLayout="column" fxLayoutAlign="start stretch">
+                        <mat-input-container>
+                            <input matInput placeholder="School Name" type="text" name="name" required
+                                   [(ngModel)]="school.name">
+                        </mat-input-container>
+                        <mat-input-container>
+                            <input matInput placeholder="Address" type="text" name="address" required
+                                   [(ngModel)]="school.address">
+                        </mat-input-container>
+                        <div fxLayout="row" fxLayoutGap="10px">
+                            <div fxLayout="column" fxFlex="50%">
+                                <mat-input-container>
+                                    <input matInput placeholder="Phone Number" type="text" name="phoneNumber" required
+                                           [(ngModel)]="school.phoneNumber">
+                                </mat-input-container>
+                            </div>
+                            <div fxLayout="column" fxFlex="50%">
+                                <mat-input-container>
+                                    <input matInput placeholder="Email" type="text" name="email" required
+                                           [(ngModel)]="school.email">
+                                </mat-input-container>
+                            </div>
+                        </div>
+                        <div fxLayout="row" fxLayoutGap="10px">
+                            <div fxLayout="column" fxFlex="50%">
+                                <mat-form-field class="full-width">
+                                    <mat-select placeholder="Education System"
+                                                (change)="getEducationSystemLevels($event)"
+                                                ngModel name="educationSystem" [ngModelOptions]="{standalone: true}">
+                                        <mat-option *ngFor="let educationSystem of educationSystems"
+                                                    [value]="educationSystem.id">
+                                            {{ educationSystem.name }}
+                                        </mat-option>
+                                    </mat-select>
+                                </mat-form-field>
+                            </div>
+                            <div fxLayout="column" fxFlex="50%">
+                                <mat-form-field class="full-width">
+                                    <mat-select placeholder="Education System Level" name="educationSystemLevels"
+                                                [(ngModel)]="school.educationSystemLevel">
+                                        <mat-option *ngFor="let educationSystemLevel of selectedEducationSystemLevels"
+                                                    [value]="educationSystemLevel">
+                                            {{ educationSystemLevel.name }}
+                                        </mat-option>
+                                    </mat-select>
+                                </mat-form-field>
+                            </div>
+                        </div>
+                        <div *ngIf="school.id>0">
+                            <div fxLayout="row" fxLayoutGap="10px">
+                                <div fxLayout="column" fxFlex="50%">
+                                    <mat-input-container>
+                                        <input matInput placeholder="Username" type="text"
+                                               [value]="sanitizeSchoolName()"
+                                               name="username" required
+                                               [(ngModel)]="schoolUserAccount.userAccountProfile.userAccount.username">
+                                    </mat-input-container>
+                                </div>
+                                <div fxLayout="column" fxFlex="50%">
+                                    <mat-input-container>
+                                        <input matInput placeholder="Email" type="text" [value]="school.email"
+                                               name="email" required
+                                               [(ngModel)]="schoolUserAccount.userAccountProfile.userAccount.email">
+                                    </mat-input-container>
+                                </div>
+                            </div>
+                            <div fxLayout="row" fxLayoutGap="10px">
+                                <div fxLayout="column" fxFlex="50%">
+                                    <mat-input-container>
+                                        <input matInput placeholder="Password" type="password" name="password" required
+                                               [(ngModel)]="schoolUserAccount.userAccountProfile.userAccount.password">
+                                    </mat-input-container>
+                                </div>
+                                <div fxLayout="column" fxFlex="50%">
+                                    <mat-input-container>
+                                        <input matInput placeholder="Confirm Password" type="password"
+                                               name="password-confirm"
+                                               required
+                                               [(ngModel)]="schoolUserAccount.userAccountProfile.userAccount.confirmPassword">
+                                    </mat-input-container>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="extra-options" fxLayout="row" fxLayoutAlign="center center" *ngIf="false">
+                            <mat-checkbox class="remember-me">
+                                <a href="javascript:;">Accept Terms</a>
+                            </mat-checkbox>
+                        </div>
+                        <button color="primary" mat-raised-button [disabled]="!form.valid || isProcessing">
+                            Register
+                        </button>
+                        <p class="note">Already have an account? <a [routerLink]="['/auth/login']">Login</a></p>
+                    </div>
+                </form>
+            </mat-expansion-panel>
+            <mat-expansion-panel [expanded]="signupStep === 1" [disabled]="signupStep === 0">
+                <mat-expansion-panel-header>
+                    <mat-panel-title>
+                        Login Details
+                    </mat-panel-title>
+                    <mat-panel-description>
+                        {{ schoolUserAccount.userAccountProfile.userAccount.username ===''? 'Create user account': schoolUserAccount.userAccountProfile.userAccount.username }}
+                    </mat-panel-description>
+                </mat-expansion-panel-header>
+                <form #loginDetailsForm="ngForm" (ngSubmit)="registerUserAccount()">
+                    <div class="register-content" fxLayout="column" fxLayoutAlign="start stretch">
+                        <mat-input-container>
+                            <input matInput placeholder="Username" type="text" name="username" required
+                                   [(ngModel)]="schoolUserAccount.userAccountProfile.userAccount.username">
+                        </mat-input-container>
+                        <mat-input-container>
+                            <input matInput placeholder="Email" type="text" name="email" required
+                                   [(ngModel)]="schoolUserAccount.userAccountProfile.userAccount.email">
+                        </mat-input-container>
+                        <div fxLayout="row" fxLayoutGap="10px">
+                            <div fxLayout="column" fxFlex="50%">
+                                <mat-input-container>
+                                    <input matInput placeholder="Password" type="password" name="password" required
+                                           [(ngModel)]="schoolUserAccount.userAccountProfile.userAccount.password">
+                                </mat-input-container>
+                            </div>
+                            <div fxLayout="column" fxFlex="50%">
+                                <mat-input-container>
+                                    <input matInput placeholder="Confirm password" type="password" name="confirmPassword" required
+                                           [(ngModel)]="schoolUserAccount.userAccountProfile.userAccount.confirmPassword">
+                                </mat-input-container>
+                            </div>
+                        </div>
+                        <button color="primary" mat-raised-button [disabled]="!loginDetailsForm.valid || isProcessing">
+                            Create user account
+                        </button>
+                    </div>
+                </form>
+            </mat-expansion-panel>
+        </mat-accordion>
+
+    </div>
+</div>

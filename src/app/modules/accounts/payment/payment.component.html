@@ -1,0 +1,90 @@
+<div fxLayout.lg="row" fxLayout.sm="row" fxLayout.sm="column" fxLayout.xs="column" fxLayoutGap="10px">
+    <mat-card fxFlex.lg="70%" fxFlex.md="70%">
+        <mat-card-title>
+            Receive Payment
+        </mat-card-title>
+        <mat-card-content>
+            <form #form="ngForm" fxLayout="column" (ngSubmit)="save()">
+                <div class="fields-container m-t-5" fxLayout="column">
+                    <div fxLayout="row" fxLayoutGap="10px">
+                        <div class="fields-container" fxLayout="column" fxFlex="50%">
+                            <mat-form-field class="full-width">
+                                <input matInput placeholder="Amount" type="number" name="amount"
+                                       [(ngModel)]="feeTransaction.amount" required>
+                            </mat-form-field>
+                        </div>
+                        <div class="fields-container" fxLayout="column" fxFlex="50%">
+                            <mat-form-field class="full-width">
+                                <mat-select (change)="studentSelected($event)" placeholder="Student"
+                                            [(ngModel)]="feeTransaction.student" name="student">
+                                    <mat-option *ngFor="let student of students" [value]="student">
+                                        {{ student.regNo }} - {{ student.surname }} {{ student.otherNames }}
+                                    </mat-option>
+                                </mat-select>
+                            </mat-form-field>
+                        </div>
+                    </div>
+                    <div fxLayout="row" fxLayoutGap="10px">
+                        <div class="fields-container" fxLayout="column" fxFlex="50%">
+                            <mat-form-field>
+                                <input matInput [matDatepicker]="transactionDate" placeholder="Transaction Date"
+                                       name="transactionDate" required [(ngModel)]="feeTransaction.transactionDate">
+                                <mat-datepicker-toggle matSuffix [for]="transactionDate"></mat-datepicker-toggle>
+                                <mat-datepicker #transactionDate></mat-datepicker>
+                            </mat-form-field>
+                        </div>
+                        <div class="fields-container" fxLayout="column" fxFlex="50%">
+                            <mat-form-field class="full-width">
+                                <mat-select placeholder="Payment Method" name="paymentMethod"
+                                            [(ngModel)]="feeTransaction.paymentMethod">
+                                    <mat-option *ngFor="let paymentMethod of paymentMethods"
+                                                [value]="paymentMethod.id">
+                                        {{ paymentMethod.name }}
+                                    </mat-option>
+                                </mat-select>
+                            </mat-form-field>
+                        </div>
+
+                    </div>
+                </div>
+            </form>
+        </mat-card-content>
+        <mat-card-actions align="end">
+            <button color="primary" [disabled]="!form.valid || isProcessing" mat-raised-button (click)="save()">
+                Save
+            </button>
+        </mat-card-actions>
+    </mat-card>
+
+    <mat-card fxFlex.lg="30%" fxFlex.md="30%">
+        <mat-card-title>
+            Last Payment
+        </mat-card-title>
+        <mat-card-content>
+            <div fxLayout="row" fxLayoutAlign="center" *ngIf="isGettingStudent">
+                <mat-spinner *ngIf="true" [diameter]="80" [strokeWidth]="5"></mat-spinner>
+            </div>
+            <div fxLayout="row" *ngIf="!isGettingStudent">
+                <mat-list>
+                    <mat-list-item>
+                        <mat-icon mat-list-icon>today</mat-icon>
+                        <h4 mat-line>Last Payment Date</h4>
+                        <p mat-line>{{ studentBalance? studentBalance.transactionDate : 'No transaction' }}</p>
+                    </mat-list-item>
+                    <mat-list-item>
+                        <mat-icon mat-list-icon>attach_money</mat-icon>
+                        <h4 mat-line>Last Payment</h4>
+                        <p mat-line>{{ studentBalance? (studentBalance.amount | number) : 'No transaction' }}</p>
+                    </mat-list-item>
+                    <mat-list-item>
+                        <mat-icon mat-list-icon>account_balance_wallet</mat-icon>
+                        <h4 mat-line>Balance</h4>
+                        <p mat-line>
+                            {{ studentBalance? (studentBalance.balance | number) : 'No transaction' }}
+                        </p>
+                    </mat-list-item>
+                </mat-list>
+            </div>
+        </mat-card-content>
+    </mat-card>
+</div>

@@ -1,0 +1,38 @@
+<div fxLayout="column" fxLayoutAlign="center center" style="height: 100%;">
+    <div class="auth mat-elevation-z12">
+        <mat-progress-bar *ngIf="isProcessing" style="position: relative;" mode="indeterminate"></mat-progress-bar>
+        <div class="auth-header" fxLayout="column" fxLayoutAlign="center center">
+            Select a profile to login in
+        </div>
+        <mat-list class="account-profiles-list">
+            <mat-list-item *ngIf="false">
+                Login as
+            </mat-list-item>
+            <mat-list-item class="account-profile-list-item"
+                           *ngFor="let userAccountProfile of userAccountProfiles"
+                           (click)="chooseAccountProfile(userAccountProfile)">
+                <img mat-list-avatar [src]="userAccountProfile.type === 1
+                && userAccountProfile.schoolUserAccount.school.logo?
+                 getSchoolLogoUrl(userAccountProfile.schoolUserAccount.school): 'assets/images/avatars/noavatar.png'">
+                <h3 mat-line>
+                    {{
+                    userAccountProfile.type == 1?
+                    userAccountProfile.schoolUserAccount.school.name:
+                    'Parent'
+                    }}</h3>
+                <p mat-line>
+                  <!--  <span>{{ userAccountProfile.userAccount. }}</span>-->
+                    <span class="subline">
+                        {{ userAccountProfile.type == 1?
+                           userAccountProfile.schoolUserAccount.role == 1? 'School Admin': 'Teacher' :
+                            ''
+                           }}
+                    </span>
+                </p>
+            </mat-list-item>
+        </mat-list>
+        <p fxLayout="row" fxLayoutAlign="center">
+            <button (click)="logout()" color="warn" mat-raised-button>Logout</button>
+        </p>
+    </div>
+</div>

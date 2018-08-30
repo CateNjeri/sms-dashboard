@@ -1,0 +1,18 @@
+<mat-card>
+    <mat-card-header fxLayoutAlign="space-between">
+        <mat-card-title>
+            <h2>Assignments</h2>
+        </mat-card-title>
+        <div fxLayout="row" fxLayoutAlign="end center">
+            <button (click)="addAssignment()" mat-button mat-raised-button color="accent">
+                <mat-icon>add</mat-icon>
+            </button>
+        </div>
+    </mat-card-header>
+    <mat-card-content>
+        <stbui-table (onActionClick)="actionClick($event)" [query]="assignmentsTable.query"
+                     (onSelectChange)="onSelectChange($event)" (onSelectAll)="onSelectChange($event)"
+                     [columns]="assignmentsTable.columns" [data]="assignmentsTable.data"></stbui-table>
+    </mat-card-content>
+</mat-card>
+

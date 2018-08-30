@@ -1,0 +1,187 @@
+<div style="height: 100%">
+    <div fxLayout="row" fxLayoutAlign="space-around center" fxLayoutWrap="wrap">
+        <mat-spinner *ngIf="isProcessing" [diameter]="80" [strokeWidth]="5"></mat-spinner>
+    </div>
+</div>
+<div fxLayout="column" *ngIf="!isProcessing">
+    <div class="p-10">
+        <div fxLayout.xs="column" fxLayout.sm="column" fxLayout.md="row"
+             fxLayout.lg="row" fxLayoutGap="10px">
+
+            <div *ngIf="activeUserAccountProfile.type == 1"
+                 fxLayout.lg="row" fxLayout.md="row" fxLayout.sm="column" fxLayout.xs="column" fxFlex.lg="50%"
+                 fxFlex.md="100%" fxFlex.sm="100%" fxFlex.xs="100%" fxLayoutGap="10px">
+                <div class="widget" fxFlex.sm="100%" fxFlex.md="50%" fxFlex.lg="50%">
+                    <stb-widget-state
+                            [value]="dashboard.studentsCount"
+                            icon="group_add"
+                            backgroundcolor="#6572B8"
+                            textcolor="white"
+                            property="Students"
+                            [changepercent]="dashboard.studentsCount"
+                            changeicon="trending_up"
+                    ></stb-widget-state>
+                </div>
+
+                <div class="widget" fxFlex.sm="100%" fxFlex.md="50%" fxFlex.lg="50%">
+                    <stb-widget-state
+                            [value]="dashboard.teachersCount"
+                            icon="pageview"
+                            backgroundcolor="#4DD0E2"
+                            textcolor="white"
+                            property="Teachers"
+                            [changepercent]="dashboard.teachersCount"
+                            changeicon="trending_up"
+                    ></stb-widget-state>
+                </div>
+            </div>
+            <div fxLayout.lg="row" fxLayout.md="row" fxLayout.sm="column" fxLayout.xs="column"
+                 [fxFlex.lg]="activeUserAccountProfile.type == 2?'100%': '50%'" fxFlex.md="100%" fxFlex.sm="100%"
+                 fxFlex.xs="100%"
+                 fxLayoutGap="10px">
+                <div class="widget" fxFlex.sm="100%" fxFlex.md="50%" fxFlex.lg="50%">
+                    <stb-widget-state
+                            [value]="dashboard.collectedFeesAmount"
+                            icon="link"
+                            backgroundcolor="#81C683"
+                            textcolor="white"
+                            property="Received Amount"
+                            [changepercent]="0"
+                            changeicon="trending_down"
+                    ></stb-widget-state>
+                </div>
+
+                <div class="widget" fxFlex.sm="100%" fxFlex.md="50%" fxFlex.lg="50%">
+                    <stb-widget-state
+                            [value]="dashboard.feeBalancesAmount"
+                            icon="monetization_on"
+                            backgroundcolor="#EAC459"
+                            textcolor="white"
+                            property="Balances"
+                            changepercent="77"
+                            changeicon="trending_up"
+                            valueprefix=""
+                    ></stb-widget-state>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div fxLayout.lg="row" fxLayout.md="row" fxLayout.xs="column" fxLayout.sm="column" fxLayoutGap="10px">
+        <div *ngIf="activeUserAccountProfile.type == 1" fxLayout="column" fxFlex.lg="50%" fxFlex.md="50%"
+             fxFlex.sm="100%" fxFlex.xs="100%"
+             class="card mat-elevation-z2 m-b-20">
+            <div class="card-header" fxLayout="row" fxLayoutAlign="space-between center">
+                <div>System Statistics</div>
+                <div fxLayout="row">
+                    <button mat-icon-button>
+                        <mat-icon>more_vert</mat-icon>
+                    </button>
+                </div>
+            </div>
+            <div class="card-content" fxLayout="column">
+                <app-stats-chart [labels]="['Students', 'Parents', 'Teachers']" [data]="systemStats"></app-stats-chart>
+            </div>
+            <div class="card-footer" fxLayout="row" fxLayoutAlign="end center">
+                <button mat-button>View All</button>
+            </div>
+        </div>
+
+        <div fxLayout="column" fxFlex.lg="50%" fxFlex.md="50%" fxFlex.sm="100%" fxFlex.xs="100%"
+             class="card mat-elevation-z2 m-b-20">
+            <div class="card-header" fxLayout="row" fxLayoutAlign="space-between center">
+                <div>Student Attendance</div>
+                <div fxLayout="row">
+                    <button mat-icon-button>
+                        <mat-icon>more_vert</mat-icon>
+                    </button>
+                </div>
+            </div>
+            <div class="card-content" fxLayout="column">
+                <app-stats-chart [labels]="['Present', 'Absent', 'Half-day']" [data]="[90, 5, 5]"></app-stats-chart>
+            </div>
+            <div class="card-footer" fxLayout="row" fxLayoutAlign="end center">
+                <button mat-button (click)="markAttendance()">Mark Attendance</button>
+                <button mat-button accent>
+                    <mat-icon>done</mat-icon>
+                    Report
+                </button>
+            </div>
+        </div>
+        <div *ngIf="activeUserAccountProfile.type == 2" fxLayout="column" fxFlex.lg="50%" fxFlex.md="50%"
+             fxFlex.sm="100%" fxFlex.xs="100%"
+             class="card mat-elevation-z2 m-b-20">
+            <div class="card-header" fxLayout="row" fxLayoutAlign="space-between center">
+                <div>Student Records</div>
+                <div fxLayout="row">
+                    <button mat-icon-button>
+                        <mat-icon>more_vert</mat-icon>
+                    </button>
+                </div>
+            </div>
+            <div class="card-content" fxLayout="column">
+
+            </div>
+            <div class="card-footer" fxLayout="row" fxLayoutAlign="end">
+                <button mat-button (click)="markAttendance()">View all</button>
+            </div>
+        </div>
+    </div>
+
+    <div fxLayout.lg="row" fxLayout.md="row" fxLayout.xs="column" fxLayout.sm="column" fxLayoutGap="10px">
+        <div fxLayout="column" class="card mat-elevation-z2 m-b-20" fxFlex.lg="66.667%" fxFlex.md="66.667%"
+             fxFlex.sm="100%" fxFlex.xs="100%">
+            <div class="card-header" fxLayout="row" fxLayoutAlign="space-between center">
+                <div>School Calendar</div>
+                <div fxLayout="row">
+                    <button mat-icon-button>
+                        <mat-icon>more_vert</mat-icon>
+                    </button>
+                </div>
+            </div>
+            <div class="card-content" fxLayout="column">
+                <app-events-calendar></app-events-calendar>
+            </div>
+            <div class="card-footer" fxLayout="row" fxLayoutAlign="end center">
+                <button mat-button>View All</button>
+            </div>
+        </div>
+        <div fxHide="true" fxLayout="column" class="card mat-elevation-z2 m-b-20" fxFlex.lg="33.33%" fxFlex.md="33.33%"
+             fxFlex.sm="100%" fxFlex.xs="100%">
+            <div class="card-header" fxLayout="row" fxLayoutAlign="space-between center">
+                <div>School Calendar</div>
+                <div fxLayout="row">
+                    <button mat-icon-button>
+                        <mat-icon>more_vert</mat-icon>
+                    </button>
+                </div>
+            </div>
+            <div class="card-content" fxLayout="column">
+                <app-events-calendar></app-events-calendar>
+            </div>
+            <div class="card-footer" fxLayout="row" fxLayoutAlign="end center">
+                <button mat-button>View All</button>
+            </div>
+        </div>
+    </div>
+
+    <div class="card mat-elevation-z2" *ngIf="false">
+        <div class="card-header" fxLayout="row" fxLayoutAlign="space-between center">
+            <div>
+
+            </div>
+            <div fxLayout="row">
+                <button mat-icon-button>
+                    <mat-icon>more_vert</mat-icon>
+                </button>
+            </div>
+        </div>
+        <div class="card-content" fxLayout="column">
+        </div>
+        <div class="card-footer" fxLayout="row" fxLayoutAlign="end center">
+            <button mat-button>
+
+            </button>
+        </div>
+    </div>
+</div>

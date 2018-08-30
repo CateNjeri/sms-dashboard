@@ -1,0 +1,23 @@
+<div *ngIf="false" class="header" fxLayout="row" fxLayoutAlign="start center">
+  <div class="search-wrapper mat-white-bg mat-elevation-z7" fxFlex fxLayout="row" fxLayoutAlign="start center">
+    <div class="search" flex fxLayout="row" fxLayoutAlign="start center">
+      <mat-icon class="mat-18">search</mat-icon>
+      <input type="text" fxFlex>
+    </div>
+  </div>
+</div>
+<mat-card>
+    <mat-card-header fxLayoutAlign="space-between">
+        <mat-card-title>
+            <h2>Class Levels</h2>
+        </mat-card-title>
+          <div fxLayout="row" fxLayoutAlign="end center">
+              <button (click)="addSubject()" mat-button mat-raised-button color="accent">
+                  <mat-icon>add</mat-icon>
+              </button>
+          </div>
+    </mat-card-header>
+  <mat-card-content>
+    <stbui-table [loading]="classesTable.loading" (onActionClick)="actionClick($event)" (onSelectChange)="onSelectChange($event)" (onSelectAll)="onSelectChange($event)" [columns]="classesTable.columns" [data]="classesTable.data"></stbui-table>
+  </mat-card-content>
+</mat-card>

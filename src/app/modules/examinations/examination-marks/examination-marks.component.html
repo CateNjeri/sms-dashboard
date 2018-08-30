@@ -1,0 +1,65 @@
+<div fxLayout="column" fxLayoutGap="10px">
+  <mat-card>
+      <mat-card-title>
+        Attendace Register
+      </mat-card-title>
+    <mat-card-content>
+      <form #filterForm="ngForm" fxLayout="column" (ngSubmit)="save()">
+        <div fxLayout="row" fxLayoutGap="10px">
+          <mat-form-field class="full-width" fxFlex="33%">
+              <mat-select required placeholder="Class Section" name="classLevelSection" [(ngModel)]="studentAttendanceRegisterRequest.classLevelSection">
+                  <mat-option *ngFor="let classLevelSection of classLevelSections" [value]="classLevelSection">
+                      {{ classLevelSection.classLevel.name }} {{ classLevelSection.name }}
+                  </mat-option>
+              </mat-select>
+          </mat-form-field>
+          <mat-form-field class="full-width" fxFlex="33%">
+                  <input matInput [matDatepicker]="registerDate" placeholder="Date"
+                      name="registerDate" required [(ngModel)]="studentAttendanceRegisterRequest.date">
+                  <mat-datepicker-toggle matSuffix [for]="registerDate"></mat-datepicker-toggle>
+                  <mat-datepicker #registerDate></mat-datepicker>
+          </mat-form-field>
+          <mat-form-field class="full-width" fxFlex="33%" *ngIf="false">
+              <mat-select placeholder="Attendance Period">
+                  <mat-option *ngFor="let item of [1,2,4]" [value]="item"
+                              >
+                      {{ item }}
+                  </mat-option>
+              </mat-select>
+          </mat-form-field>
+        </div>
+      </form>
+    </mat-card-content>
+    <mat-card-actions align="end">
+        <button color="primary" (click)="getAttendanceRegister()" [disabled]="isRefreshing || !filterForm.valid" mat-raised-button>Refresh</button>
+    </mat-card-actions>
+  </mat-card>
+  <mat-card *ngIf="studentAttendances.length>0 && !isRefreshing">
+    <mat-card-header fxLayoutAlign="space-between">
+      <mat-card-title>
+        <h3>Mark Attendace</h3>
+      </mat-card-title>
+      <div fxLayout="row" fxLayoutAlign="end center" fxLayoutGap="5px">
+          <button *ngIf="false" (click)="print()" mat-button mat-raised-button color="accent">
+              Print  
+            <mat-icon>print</mat-icon>
+          </button>
+           <button (click)="allPresent()" mat-button mat-raised-button color="accent">
+              All Present 
+            <mat-icon>done</mat-icon>
+          </button>
+          <button (click)="save()" mat-button mat-raised-button color="primary">
+              Save 
+              <mat-icon>save</mat-icon>
+            </button>
+      </div>
+    </mat-card-header>
+    <mat-card-content>
+        <mat-selection-list #studentsList>
+            <mat-list-option *ngFor="let studentAttendance of studentAttendances" [selected]="studentAttendance.status == 1">
+               {{ studentAttendance.student.surname }} {{ studentAttendance.student.otherNames }}
+            </mat-list-option>
+     </mat-selection-list>
+    </mat-card-content>
+  </mat-card>
+</div>

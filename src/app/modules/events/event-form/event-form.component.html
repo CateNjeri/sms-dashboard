@@ -1,0 +1,80 @@
+<mat-card>
+    <mat-card-header>
+        <mat-card-title>
+            <h2>{{event.id?'Edit': 'Add' }} Event</h2>
+        </mat-card-title>
+    </mat-card-header>
+    <mat-card-content>
+        <form #form="ngForm" fxLayout="column" (ngSubmit)="save()">
+            <div fxLayout="row" fxLayoutGap="10px">
+                <mat-form-field class="full-width">
+                    <input matInput placeholder="Title" type="text" name="title"
+                           [(ngModel)]="event.title" required>
+                </mat-form-field>
+            </div>
+            <div fxLayout="row" fxLayoutGap="10px">
+                <mat-form-field class="full-width">
+                    <input matInput [matDatepicker]="startDatePicker" placeholder="Start date" type="text"
+                           name="startDate"
+                           [(ngModel)]="event.startDate" required>
+                    <mat-datepicker-toggle matSuffix [for]="startDatePicker"></mat-datepicker-toggle>
+                    <mat-datepicker #startDatePicker></mat-datepicker>
+                </mat-form-field>
+                <mat-form-field class="full-width">
+                    <input matInput [matDatepicker]="stopDatePicker" [matDatepickerFilter]="myFilter"
+                           placeholder="Stop date" type="text" name="stopDate"
+                           [(ngModel)]="event.stopDate" required>
+                    <mat-datepicker-toggle matSuffix [for]="stopDatePicker"></mat-datepicker-toggle>
+                    <mat-datepicker #stopDatePicker></mat-datepicker>
+                </mat-form-field>
+            </div>
+            <div fxLayout="row" fxLayoutGap="10px" *ngIf="event.startDate === event.stopDate">
+                <mat-form-field class="full-width">
+                    <input matInput placeholder="Start time" type="text" name="startTime"
+                           [(ngModel)]="event.startTime" required>
+                </mat-form-field>
+                <mat-form-field class="full-width">
+                    <input matInput placeholder="Stop time" type="text" name="stopTime"
+                           [(ngModel)]="event.stopTime" required>
+                </mat-form-field>
+            </div>
+            <div fxLayout="row" fxLayoutGap="10px">
+                <mat-form-field class="full-width">
+                            <textarea matInput placeholder="Description" type="text" name="description"
+                                      [(ngModel)]="event.description">
+
+                            </textarea>
+                </mat-form-field>
+            </div>
+            <div fxLayout="row" fxLayoutGap="10px">
+                <mat-form-field class="full-width">
+                            <textarea matInput placeholder="Others" type="text" name="others"
+                                      [(ngModel)]="event.others">
+                            </textarea>
+                </mat-form-field>
+            </div>
+            <div fxLayout="row" fxLayoutGap="10px">
+                <mat-checkbox name="isBookable"
+                              [(ngModel)]="event.isBookable">
+                    Allow for bookings
+                </mat-checkbox>
+
+            </div>
+            <div fxLayout="row" fxLayoutGap="10px">
+                <mat-checkbox placeholder="" type="checkbox" name="inNoticeBoard"
+                              [(ngModel)]="event.inNoticeBoard">
+                    In Noticeboard
+                </mat-checkbox>
+
+            </div>
+        </form>
+    </mat-card-content>
+    <mat-card-actions align="end">
+        <button mat-button mat-raised-button
+                [disabled]="form.invalid || isProcessing"
+                (click)="save()"
+                color="primary">
+            Save
+        </button>
+    </mat-card-actions>
+</mat-card>

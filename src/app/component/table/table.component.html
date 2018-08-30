@@ -1,0 +1,96 @@
+<table class="table" [class.table-hover]="disabledHover" [class.table-striped]="stripe"
+       [class.table-bordered]="border" *ngIf="!height">
+    <thead>
+    <tr>
+        <th *ngFor="let column of columns" colspan="1">
+            <div *ngIf="column.type === 'selection'">
+                <mat-checkbox (change)="onCheckBoxAllTrigger($event)" [(ngModel)]="checked"></mat-checkbox>
+            </div>
+            <div *ngIf="column.type !== 'selection' && column.type !== 'actions'">{{ column.title }}</div>
+        </th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr class="loading-row" *ngIf="loading">
+        <td [attr.colspan]="columns.length" style="padding: 0 !important">
+            <mat-progress-bar style="position: relative;" mode="indeterminate"></mat-progress-bar>
+        </td>
+    </tr>
+    <tr *ngFor="let row of data" (click)="onRowClickTrigger(row)" class="data-row">
+        <td *ngFor="let column of columns">
+            <div *ngIf="column.type === 'selection'">
+                <mat-checkbox (change)="onCheckBoxTrigger($event, row)" [checked]="checked"></mat-checkbox>
+            </div>
+            <div *ngIf="column.type !== 'selection' && column.type !== 'actions'">
+                <div *ngIf="column.formatter" [innerHTML]="format(row, column.formatter) | sanitizeHtml">
+                </div>
+                <span *ngIf="!column.formatter">
+                        {{ readProperty(row, column.key)}}
+                </span>
+            </div>
+            <button [matMenuTriggerFor]="actions"
+                    #actionsMenuTrigger="matMenuTrigger"
+                    *ngIf="column.type === 'actions' && column.actions" mat-button
+                    mat-icon-button>
+                <mat-icon>more_vert</mat-icon>
+            </button>
+            <mat-menu #actions="matMenu">
+                <button mat-menu-item
+                        *ngFor="let action of column.actions"
+                        (click)="actionClicked(action, row)">
+                    <mat-icon *ngIf="action.icon">{{ action.icon }}</mat-icon>
+                    {{ action.name }}
+                </button>
+            </mat-menu>
+            <div *ngIf="false">
+                <button mat-button [color]="action.color" *ngFor="let action of column.actions"
+                        (click)="actionClicked(action, row)">
+                    <mat-icon>{{ action.icon }}</mat-icon>
+                    {{ action.name }}
+                </button>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+    <tfoot>
+    <tr>
+        <td [attr.colspan]="columns.length">
+            <mat-paginator *ngIf="false" [pageSize]="5" [length]="data.length"></mat-paginator>
+            <stbui-pagination align="end" [total]="data.length"></stbui-pagination>
+        </td>
+    </tr>
+    </tfoot>
+</table>
+
+
+<div class="fixed-table" [ngStyle]="{'height.px': height}" *ngIf="height">
+    <div class="table-wrapper">
+        <table class="table" [class.table-hover]="disabledHover" [class.table-striped]="stripe"
+               [class.table-bordered]="border">
+            <thead #fixedTopCell>
+            <tr>
+                <th *ngFor="let column of columns; let i= index">
+                    <div *ngIf="column.type === 'selection'">
+                        <mat-checkbox (change)="onCheckBoxAllTrigger($event)" [(ngModel)]="checked"></mat-checkbox>
+                    </div>
+                    {{ column?.title }}
+                    <div [ngStyle]="{'width.px':cells[i]?.width, 'height.px':cells[i]?.height}"
+                         class="fixed-table-heading"
+                         *ngIf="column.type !== 'selection'">{{ column.title }}
+                    </div>
+                </th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr *ngFor="let row of data" (click)="onRowClickTrigger(row)">
+                <td *ngFor="let column of columns">
+                    <div *ngIf="column.type === 'selection'">
+                        <mat-checkbox (change)="onCheckBoxTrigger($event, row)" [checked]="checked"></mat-checkbox>
+                    </div>
+                    <div *ngIf="column.type !== 'selection'">{{ row[column.key] }}</div>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</div>

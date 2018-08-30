@@ -1,0 +1,62 @@
+<div class="sidenav-container" fxLayout="column">
+
+    <mat-toolbar class="sidenav-toolbar mat-elevation-z2" [ngClass]="[theme.logo]" fxLayout="row"
+                 fxFlexAlign="center center">
+        <mat-icon class="logo-icon material-icons">view_compact</mat-icon>
+        <a class="logo-text" href="/">
+            Revenue Sure
+        </a>
+        <span fxFlex></span>
+       
+        <span fxFlex></span>
+        <button mat-icon-button (click)="toggleIconSidenav()" fxHide="true" [fxHide.gt-sm]="true"
+                style="display: block">
+            <mat-icon class="icon-sidenav-toggle" [class.rotate]="isIconSidenav()">chevron_left
+            </mat-icon>
+        </button>
+    </mat-toolbar>
+    <div class="student-accounts-menu" *ngIf="currentUserProfile.type === 2">
+        <mat-list dense>
+            <mat-list-item class="active-student" [matMenuTriggerFor]="studentsMenu">
+                <img mat-list-avatar src="assets/images/avatars/noavatar.png">
+                <h3 mat-line>{{ activeStudent?.surname }} {{ activeStudent?.otherNames }}</h3>
+                <p mat-line>
+                    <span>{{ activeStudent?.classLevelSection?.classLevel?.name }} {{ activeStudent?.classLevelSection?.name }}</span>    
+                </p>
+                <p mat-line>
+                    <span class="subline">{{ activeStudent?.school?.name }}</span>
+                </p>
+                <mat-icon class="icon">keyboard_arrow_down</mat-icon>
+            </mat-list-item>
+        </mat-list>
+        <mat-menu #studentsMenu yPosition="below" xPosition="after">
+            <mat-list class="student-list">
+                <mat-list-item>
+                    Select Student
+                </mat-list-item>
+                <mat-list-item class="student-list-item" *ngFor="let student of students" (click)="setActiveStudent(student)">
+                    <img mat-list-avatar src="assets/images/avatars/noavatar.png">
+                    <h3 mat-line>{{ student.surname }} {{ student.otherNames }}</h3>
+                    <p mat-line>
+                        <span>{{ student.classLevelSection.classLevel.name }} {{ student.classLevelSection.name }}</span>
+                        <span class="subline">
+                             - {{ student.school.name }}
+                        </span>
+                    </p>
+                </mat-list-item>
+            </mat-list>
+        </mat-menu>
+    </div>
+    <div class="sidenav-scrollbar-container"  [ngClass]="[theme.aside]" fxLayout="column">
+        <mat-nav-list fxLayout="column" [perfect-scrollbar] class="sidenav-list sidenav-toplevel">
+            <sidenav-item *ngFor="let item of items" [item]="item"></sidenav-item>
+        </mat-nav-list>
+    </div>
+
+    <div class="sidenav-footer" [ngClass]="[theme.aside]" fxLayout="row" fxFlexAligin="center center">
+        <a fxFlex="100" mat-raised-button href="/" target="_blank">
+            <mat-icon style="font-size: 20px;">help</mat-icon>
+            Documentation
+        </a>
+    </div>
+</div>

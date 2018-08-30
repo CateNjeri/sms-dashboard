@@ -1,0 +1,16 @@
+<mat-sidenav-container>
+    <mat-sidenav class="sidenav" align="start" [mode]="sidenavMode" [opened]="sidenavOpen" #sidenav>
+        <app-sidenav [theme]="theme"></app-sidenav>
+    </mat-sidenav>
+
+    <div class="sidenav-container" fxLayout="column">
+        <stbui-header [theme]="theme" [sidenav]="sidenav"></stbui-header>
+
+        <div class="main-container" #scrollContainer>
+            <div class="content">
+                <router-outlet (activate)="onActivate($event, scrollContainer)"></router-outlet>
+            </div>
+            <app-footer></app-footer>
+        </div>
+    </div>
+</mat-sidenav-container>

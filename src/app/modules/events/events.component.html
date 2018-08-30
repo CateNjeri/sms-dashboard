@@ -1,0 +1,24 @@
+<mat-card>
+    <mat-card-header fxLayoutAlign="space-between">
+        <mat-card-title>
+            <h2>Events</h2>
+        </mat-card-title>
+        <div fxLayout="row" fxLayoutAlign="end center" fxLayoutGap="5px">
+            <button (click)="calendar()" mat-button mat-raised-button color="accent">
+                Calendar
+                <mat-icon>today</mat-icon>
+            </button>
+            <button (click)="add()" mat-button mat-raised-button color="primary">
+                Add Event
+                <mat-icon>add</mat-icon>
+            </button>
+        </div>
+    </mat-card-header>
+    <mat-card-content>
+        <stbui-table (onActionClick)="actionClick($event)"
+                     [query]="eventsTable.query" [loading]="eventsTable.loading"
+                     (onSelectChange)="onSelectChange($event)"
+                     (onSelectAll)="onSelectChange($event)"
+                     [columns]="eventsTable.columns" [data]="eventsTable.data"></stbui-table>
+    </mat-card-content>
+</mat-card>

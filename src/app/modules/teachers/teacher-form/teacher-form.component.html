@@ -1,0 +1,104 @@
+<mat-card>
+    <mat-card-title>
+        {{ teacher.id === 0? 'Add': 'Edit' }} Teacher
+    </mat-card-title>
+    <mat-card-content>
+        <form #form="ngForm" fxLayout="column" (ngSubmit)="save()">
+            <mat-tab-group>
+                <mat-tab label="Teacher Details">
+                    <div class="fields-container m-t-5" fxLayout="column">
+                        <div fxLayout="row" fxLayoutGap="10px">
+                            <div class="fields-container" fxLayout="column" fxFlex="50%">
+                                <mat-form-field class="full-width">
+                                    <input matInput placeholder="Surname" name="surname" [(ngModel)]="teacher.surname"
+                                           required minlength="4"
+                                           maxlength="10">
+                                </mat-form-field>
+                            </div>
+                            <div class="fields-container" fxLayout="column" fxFlex="50%">
+                                <mat-form-field class="full-width">
+                                    <input matInput placeholder="Other names" name="otherNames"
+                                           [(ngModel)]="teacher.otherNames" required>
+                                </mat-form-field>
+                            </div>
+                        </div>
+                        <div fxLayout="row" fxLayoutGap="10px">
+                            <div class="fields-container" fxLayout="column" fxFlex="50%">
+                                <mat-form-field class="full-width">
+                                    <input matInput placeholder="Teacher Code" name="code" [(ngModel)]="teacher.code"
+                                           required>
+                                </mat-form-field>
+                            </div>
+                            <div class="fields-container" fxLayout="column" fxFlex="50%">
+                                <mat-form-field class="full-width">
+                                    <mat-select placeholder="Gender" [(ngModel)]="teacher.gender" name="gender">
+                                        <mat-option *ngFor="let item of ['Male', 'Female']" [value]="item">
+                                            {{ item }}
+                                        </mat-option>
+                                    </mat-select>
+                                </mat-form-field>
+                            </div>
+                        </div>
+                        <div fxLayoutGap="10px" fxLayout="row">
+                            <mat-form-field class="full-width">
+                                <input matInput placeholder="Phone Number" name="phoneNumber"
+                                       [(ngModel)]="teacher.phoneNumber"
+                                       required>
+                            </mat-form-field>
+                            <mat-form-field class="full-width">
+                                <input matInput placeholder="Email" name="email"
+                                       [(ngModel)]="teacher.email"
+                                       required>
+                            </mat-form-field>
+                        </div>
+                        <div fxLayout="row" fxLayoutGap="10px">
+                            <div class="fields-container" fxLayout="column" fxFlex="33.333%">
+
+                            </div>
+                        </div>
+                    </div>
+                </mat-tab>
+
+                <mat-tab label="Login Details" *ngIf="false">
+                    <div class="fields-container m-t-5" fxLayout="column">
+                        <mat-form-field class="full-width">
+                            <input matInput placeholder="Email" name="email"
+                                   [(ngModel)]="teacher.schoolUserAccount.userAccountProfile.userAccount.email"
+                                   required>
+                        </mat-form-field>
+                        <mat-form-field class="full-width">
+                            <input matInput placeholder="Password" type="password" name="password"
+                                   [(ngModel)]="teacher.schoolUserAccount.userAccountProfile.userAccount.password"
+                                   required>
+                        </mat-form-field>
+                        <mat-form-field class="full-width">
+                            <input matInput placeholder="Confirm Password" name="confirmPassword" type="password"
+                                   [(ngModel)]="teacher.schoolUserAccount.userAccountProfile.userAccount.confirmPassword"
+                                   required>
+                        </mat-form-field>
+                    </div>
+                </mat-tab>
+
+                <mat-tab label="Subjects" *ngIf="false">
+                    <mat-selection-list #teacherSubjects>
+                        <mat-list-option *ngFor="let subject of subjects" value="subject">
+                            {{ subject.name }}
+                        </mat-list-option>
+                    </mat-selection-list>
+                </mat-tab>
+
+            </mat-tab-group>
+        </form>
+        <mat-list *ngIf="!teacher.id">
+            <mat-list-item mat-list-icon>
+                <mat-icon>info</mat-icon>
+                <p mat-line>Surname is the default password</p>
+            </mat-list-item>
+        </mat-list>
+    </mat-card-content>
+    <mat-card-actions align="end">
+        <button mat-button *ngIf="false">Cancel</button>
+        <button color="primary" mat-raised-button (click)="save()" [disabled]="!form.valid || isProcessing">Save
+        </button>
+    </mat-card-actions>
+</mat-card>

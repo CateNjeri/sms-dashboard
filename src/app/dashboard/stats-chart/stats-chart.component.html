@@ -1,0 +1,6 @@
+<canvas baseChart height="150px"
+        [data]="data"
+        [labels]="labels"
+        [chartType]="type"
+        (chartHover)="chartHovered($event)"
+        (chartClick)="chartClicked($event)"></canvas>

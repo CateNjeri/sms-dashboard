@@ -1,0 +1,67 @@
+mat-toolbar.mat-toolbar.sidenav-toolbar {
+  z-index: 3;
+}
+
+.logo-text {
+  text-decoration: none;
+  margin-left: 24px;
+  line-height: normal;
+}
+
+.sidenav-container, .sidenav-scrollbar-container {
+  height: 100%;
+}
+
+.cdk-focus-trap-content, mat-sidenav {
+  overflow-y: hidden !important;
+  overflow-x: hidden;
+}
+
+.icon-sidenav-toggle {
+  color: #f00;
+  transition: transform .25s;
+
+  &.rotate {
+    transform: rotate(-180deg);
+  }
+}
+
+.sidenav-footer {
+  border-top: 1px solid rgba(0, 0, 0, .1);
+  a {
+    background-color: rgba(0, 0, 0, .12);
+    color: rgba(255, 255, 255, .8)
+  }
+}
+.mat-list-item-content {
+  background: rgba(187, 81, 81, 0.05); 
+}
+.active-student {
+  &:hover {
+    background: #ffffff;
+    cursor: hand;
+    .icon {
+      // transform: rotate(-180deg);
+    }
+  }
+}
+
+.active-student {
+  cursor: pointer;
+  background: inherit;
+  margin: 0 !important;
+}
+
+.student-list {
+  margin: 0 !important;
+
+  .student-list-item {
+    cursor: pointer;
+  }
+  .student-list-item {
+    &:hover {
+      background: rgba(0, 0, 0, .05);
+    }
+  }
+}
+

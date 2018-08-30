@@ -1,0 +1,88 @@
+<div fxLayout.lg="row" fxLayout.md="row" fxLayout.sm="column" fxLayout.xs="column" fxLayoutGap="10px">
+    <mat-card class="school-logo-container" fxFlex.lg="25%" fxFlex.md="30%" fxFlex.sm="100%">
+        <mat-card-content align="center">
+            <img *ngIf="previewLogo" [src]="previewLogo" class="school-logo">
+            <img *ngIf="!previewLogo" [src]="getLogoUrl()? getLogoUrl(): '../assets/images/avatars/noavatar.png'"
+                 class="school-logo"/>
+            <input (change)="logoSelected($event)"
+                   class="logo-upload" #uploadLogoInput type="file">
+        </mat-card-content>
+        <mat-card-actions align="center">
+            <button mat-button color="accent"
+                    [disabled]="isProcessingUpload"
+                    (click)="selectLogo()">
+                <mat-icon>image</mat-icon>
+                Upload
+            </button>
+            <button *ngIf="previewLogo" color="warn"
+                    [disabled]="isProcessingUpload"
+                    mat-icon-button (click)="previewLogo = null; uploadLogoInput.value = null">
+                <mat-icon>cancel</mat-icon>
+            </button>
+            <button *ngIf="previewLogo" color="primary" mat-button
+                    [disabled]="isProcessingUpload"
+                    mat-icon-button (click)="uploadLogo()">
+                <mat-icon>file_upload</mat-icon>
+            </button>
+        </mat-card-actions>
+    </mat-card>
+
+    <mat-card fxFlex.lg="75%" fxFlex.md="70%" fxFlex.sm="100%">
+        <mat-card-title>
+            School Details
+        </mat-card-title>
+        <mat-card-content>
+            <form #form="ngForm" fxLayout="column" (ngSubmit)="save()">
+                <div fxLayout="row" fxLayoutGap="10px">
+                    <mat-form-field class="full-width">
+                        <input matInput placeholder="Name" type="text" name="name"
+                               [(ngModel)]="school.name" required>
+                    </mat-form-field>
+                </div>
+                <div fxLayout="row" fxLayoutGap="10px">
+                    <mat-form-field class="full-width">
+                        <input matInput placeholder="Address" type="text" name="address"
+                               [(ngModel)]="school.address" required>
+                    </mat-form-field>
+                    <mat-form-field class="full-width">
+                        <input matInput placeholder="Phone Number" type="text" name="phoneNumber"
+                               [(ngModel)]="school.phoneNumber" required>
+                    </mat-form-field>
+                </div>
+                <div fxLayout="row" fxLayoutGap="10px">
+                    <mat-form-field class="full-width">
+                            <textarea matInput placeholder="Vision" type="text" name="vision"
+                                      [(ngModel)]="school.vision">
+
+                            </textarea>
+                    </mat-form-field>
+                </div>
+                <div fxLayout="row" fxLayoutGap="10px">
+                    <mat-form-field class="full-width">
+                            <textarea matInput placeholder="Mission" type="text" name="mission"
+                                      [(ngModel)]="school.mission">
+                            </textarea>
+                    </mat-form-field>
+                </div>
+                <div fxLayout="row" fxLayoutGap="10px">
+                    <mat-form-field class="full-width">
+                        <input matInput placeholder="Motto" type="text" name="motto"
+                               [(ngModel)]="school.motto" required>
+                    </mat-form-field>
+                </div>
+                <div fxLayout="row" fxLayoutGap="10px">
+                    <mat-form-field class="full-width">
+                        <input matInput placeholder="Website" type="text" name="website"
+                               [(ngModel)]="school.website">
+                    </mat-form-field>
+                </div>
+            </form>
+        </mat-card-content>
+        <mat-card-actions align="end">
+            <button color="primary" [disabled]="!form.valid || isProcessing"
+                    mat-raised-button (click)="save()">
+                Save
+            </button>
+        </mat-card-actions>
+    </mat-card>
+</div>

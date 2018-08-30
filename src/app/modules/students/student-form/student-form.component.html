@@ -1,0 +1,138 @@
+<mat-card>
+    <mat-card-title>
+        {{student.id?'Edit': 'Add' }} Student
+    </mat-card-title>
+    <mat-card-content>
+        <form #form="ngForm" fxLayout="column" (ngSubmit)="save()">
+            <mat-tab-group>
+                <mat-tab label="Student Details">
+                    <div class="fields-container m-t-5" fxLayout="column">
+                        <div fxLayout="row">
+                            <div fxLayout="column" fxFlex="100%">
+                                <div fxLayout="row" fxLayoutGap="10px">
+                                    <div class="fields-container  m-t-5" fxLayout="column" fxFlex="50%">
+                                        <mat-form-field class="full-width">
+                                            <input matInput placeholder="Surname" name="surname"
+                                                   [(ngModel)]="student.surname"
+                                                   required minlength="4"
+                                                   maxlength="10">
+                                        </mat-form-field>
+                                    </div>
+                                    <div class="fields-container  m-t-5" fxLayout="column" fxFlex="50%">
+                                        <mat-form-field class="full-width">
+                                            <input matInput placeholder="Other names" name="otherNames"
+                                                   [(ngModel)]="student.otherNames" required>
+                                        </mat-form-field>
+                                    </div>
+                                </div>
+                                <div fxLayout="row" fxLayoutGap="10px">
+                                    <div class="fields-container  m-t-5" fxLayout="column" fxFlex="50%">
+                                        <mat-form-field class="full-width">
+                                            <input matInput placeholder="Reg No" name="regNo"
+                                                   [(ngModel)]="student.regNo"
+                                                   required>
+                                        </mat-form-field>
+                                    </div>
+                                    <div class="fields-container  m-t-5" fxLayout="column" fxFlex="50%">
+                                        <mat-form-field class="full-width">
+                                            <mat-select placeholder="Class/Section" name="classLevelSection"
+                                                        [(ngModel)]="student.classLevelSection"
+                                                        [(value)]="student.classLevelSection">
+                                                <mat-option *ngFor="let classLevelSection of classLevelSections"
+                                                            [value]="classLevelSection">
+                                                    {{ classLevelSection.classLevel.name }} - {{ classLevelSection.name
+                                                    }}
+                                                </mat-option>
+                                            </mat-select>
+                                        </mat-form-field>
+                                    </div>
+                                </div>
+                            </div>
+                            <div fxLayout="column" fxFlex="33%" fxHide="true">
+                                <div mat-card-image class="profile-image"></div>
+                                <div class="profile-image-avatar text-center">
+                                    <img class="avatar"
+                                         src="https://lh5.googleusercontent.com/-hcRNe540rco/AAAAAAAAAAI/AAAAAAAAAAk/DfS45tpAR-A/photo.jpg">
+                                </div>
+                            </div>
+                        </div>
+
+                        <div fxLayout="row" fxLayoutGap="10px">
+                            <div class="fields-container m-t-5" fxLayout="column" fxFlex="33.333%">
+                                <mat-form-field class="full-width">
+                                    <mat-select required placeholder="Gender" name="gender"
+                                                [(ngModel)]="student.gender">
+                                        <mat-option *ngFor="let item of ['Male', 'Female']" [value]="item">
+                                            {{ item }}
+                                        </mat-option>
+                                    </mat-select>
+                                </mat-form-field>
+                            </div>
+                            <div class="fields-container  m-t-5" fxLayout="column" fxFlex="33.33%">
+                                <mat-form-field>
+                                    <input matInput [matDatepicker]="dobDatePicker" placeholder="Date of birth"
+                                           name="dob" [(ngModel)]="student.dateOfBirth">
+                                    <mat-datepicker-toggle matSuffix [for]="dobDatePicker"></mat-datepicker-toggle>
+                                    <mat-datepicker #dobDatePicker></mat-datepicker>
+                                </mat-form-field>
+                            </div>
+                            <div class="fields-container  m-t-5" fxLayout="column" fxFlex="33.33%">
+                                <mat-form-field class="full-width">
+                                    <input matInput [matDatepicker]="admDatePicker" placeholder="Admission Date" ngModel
+                                           name="admDate" [(ngModel)]="student.admissionDate">
+                                    <mat-datepicker-toggle matSuffix [for]="admDatePicker"></mat-datepicker-toggle>
+                                    <mat-datepicker #admDatePicker></mat-datepicker>
+                                </mat-form-field>
+                            </div>
+                        </div>
+                    </div>
+                </mat-tab>
+                <mat-tab label="Parent/Guardian Details">
+                    <div fxLayout="column">
+                        <div fxLayout="row" class="m-t-5" fxLayoutGap="10px">
+                            <div class="fields-container  m-t-5" fxLayout="column" fxFlex="50%">
+                                <mat-form-field class="full-width">
+                                    <input matInput placeholder="Surname" name="parentSurname"
+                                           [(ngModel)]="student.parent.surname" required>
+                                </mat-form-field>
+                            </div>
+                            <div class="fields-container  m-t-5" fxLayout="column" fxFlex="50%">
+                                <mat-form-field class="full-width">
+                                    <input matInput placeholder="Other names" name="parentOtherNames"
+                                           [(ngModel)]="student.parent.otherNames" required>
+                                </mat-form-field>
+                            </div>
+                        </div>
+                        <div class="fields-container">
+                            <div fxLayout="row" class="m-t-5" fxLayoutGap="10px">
+                                <div class="fields-container  m-t-5" fxLayout="column" fxFlex="50%">
+                                    <mat-form-field class="full-width">
+                                        <input matInput placeholder="Phone Number" name="parentPhoneNumber"
+                                               [(ngModel)]="student.parent.phoneNumber" required>
+                                    </mat-form-field>
+                                </div>
+                                <div class="fields-container  m-t-5" fxLayout="column" fxFlex="50%">
+                                    <mat-form-field class="full-width">
+                                        <input matInput placeholder="Email" name="email"
+                                               [(ngModel)]="student.parent.email"
+                                               required>
+                                    </mat-form-field>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="fields-container  m-t-5">
+                            <mat-form-field class="full-width">
+                                <input matInput placeholder="ID No./ Passport" name="idNumber"
+                                       [(ngModel)]="student.parent.idNumber" required>
+                            </mat-form-field>
+                        </div>
+                    </div>
+                </mat-tab>
+            </mat-tab-group>
+        </form>
+    </mat-card-content>
+    <mat-card-actions align="end">
+        <button mat-button *ngIf="false">Cancel</button>
+        <button color="primary" mat-raised-button (click)="save()" [disabled]="isProcessing">Save</button>
+    </mat-card-actions>
+</mat-card>

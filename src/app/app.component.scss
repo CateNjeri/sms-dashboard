@@ -1,0 +1,28 @@
+.card {
+  background: #fff;
+  border-radius: 2px;
+
+  &-header {
+    min-height: 64px;
+    padding-left: 16px;
+    padding-right: 16px;
+    border-bottom: 1px solid #e0e0e0;
+    font-size: 20px;
+
+    padding: {
+      left: 24px;
+      right: 24px;
+    }
+  }
+
+  &-content {
+    min-height: 24px;
+  }
+
+  &-footer {
+    padding: 8px;
+    padding-left: 24px;
+    border-top: 1px solid #e0e0e0;
+  }
+
+}

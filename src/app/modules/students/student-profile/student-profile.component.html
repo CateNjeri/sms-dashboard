@@ -1,0 +1,28 @@
+<div fxLayout="row" fxLayoutGap="10px">
+  <mat-card fxFlex="30%" fxLayoutAlign="center">
+    <mat-card-content>
+      <mat-icon class="avatar">account_circle</mat-icon>
+        <div mat-card-image class="profile-image"></div>
+        <div class="profile-image-avatar text-center">
+          <img class="avatar"
+               src="https://lh5.googleusercontent.com/-hcRNe540rco/AAAAAAAAAAI/AAAAAAAAAAk/DfS45tpAR-A/photo.jpg">
+        </div>        
+    </mat-card-content>
+  </mat-card>
+  <mat-card fxFlex="80%">
+    <mat-card-title>
+      {{ student.surname }} {{ student.otherNames }}
+    </mat-card-title>
+    <mat-card-content>
+      <mat-list>
+          <h3 mat-subheader>
+              Student details
+            </h3>
+        <mat-list-item>
+          <h4 mat-line>Kevin Kibet</h4>
+          <p mat-line>Name</p>
+        </mat-list-item>
+      </mat-list>
+    </mat-card-content>
+  </mat-card>
+</div>
